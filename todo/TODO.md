@@ -181,3 +181,29 @@ potential Anthropic feedback. We have source code evidence for each.
       **Traceability:** Every file the patch touches gets a header noting
       the patch version, date, and which upstream issue it addresses.
       Clean removal = delete the hooks + revert settings.json.
+
+---
+
+## PRs TO FILE — upstream Claude Code
+
+- [ ] **PR: Credential sanitization in settings.local.json write path**
+      Issue #5544 was closed "Not Planned" after team acknowledgment. A PR
+      is harder to ignore than an issue.
+      Fix location: X8() write function in v2.1.94 — before persisting a
+      permission entry, strip or reject credential-shaped strings
+      (sk-ant-*, Bearer, export VAR="literal").
+      Proof of concept: our exit hook (claude-settings-cleanup.sh) demonstrates
+      the detection logic. The PR moves it upstream into the write path.
+      Evidence: binary analysis of UV9() and X8() in v2.1.94.
+
+- [ ] **PR: SessionStart/Stop hooks for entry and exit cleanup (this project)**
+      File the hook suite as a reference implementation showing what
+      built-in behavior should look like. Entry audit + exit cleanup
+      as a pair. Let the PR make the argument that these belong in core.
+      Artifact: claude_code_management_scripts/hooks/ is already PR-ready.
+
+- [ ] **PR: MCP ancestor walk stop signal (mcpInherit: false)**
+      Issue #42465 is 5 days old and unresponded. Get ahead of it with a PR.
+      Fix location: OB6() traversal function — add mcpInherit: false flag
+      or stop at .git boundary.
+      Simple, additive, non-breaking.
