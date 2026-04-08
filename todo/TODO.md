@@ -150,3 +150,34 @@ potential Anthropic feedback. We have source code evidence for each.
 - [ ] **No startup token budget warning**
       No built-in mechanism warns when context load at startup is unusually
       large. Users discover the problem mid-session when the model degrades.
+
+---
+
+## PORTABILITY — Multi-machine deployment
+
+- [ ] **Make this project portable across all Macs (iCloud sync)**
+      Currently installed manually on one machine. Need a strategy to deploy
+      hooks and settings to all machines sharing this iCloud space (under 6 machines).
+
+      **The dragon:** ~/.claude/ is machine-local. iCloud syncs ~/Documents/src/
+      but not ~/.claude/. So the hook scripts live in the repo (good) but the
+      installation — wiring into ~/.claude/settings.json, copying to
+      ~/.claude/user_hook_scripts/ — has to happen per machine.
+
+      **Options to think through:**
+      - Install script: `scripts/install.sh` that copies hooks and patches settings.json
+      - Symlinks from ~/.claude/user_hook_scripts/ → repo hooks/ (changes in repo
+        immediately live, no copy step)
+      - iCloud sync of ~/.claude/ itself (risky — session state, history.jsonl,
+        credentials — not everything should sync)
+
+      **Corporate parallel:** This is exactly how teams manage shared Claude Code
+      configs — a repo with hooks + an install script. Worth doing right.
+      The install script IS the PR artifact when we file upstream.
+
+      **Watch out for:** Machine-specific absolute paths in settings.json
+      (we hardcode /Users/mark/). Install script needs to substitute $HOME.
+
+      **Traceability:** Every file the patch touches gets a header noting
+      the patch version, date, and which upstream issue it addresses.
+      Clean removal = delete the hooks + revert settings.json.
