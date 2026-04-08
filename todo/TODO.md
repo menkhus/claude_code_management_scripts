@@ -119,3 +119,34 @@ it, but the cost compounds across every future session.
 settings.local.json means every MCP server in `~/.mcp.json` loads for every
 project. This is the current state across most projects here. The fix requires
 intentional per-project `.mcp.json` files and removing the global catch-all.
+
+---
+
+## DESIGN GAPS — Claude Code (upstream issues, not local fixes)
+
+These are structural problems in Claude Code itself. Document them here for
+potential Anthropic feedback. We have source code evidence for each.
+
+- [ ] **No explicit MCP walk stop mechanism**
+      The `.mcp.json` ancestor walk has no "stop here" directive. The only way
+      to prevent inheritance is to drop an empty `{"mcpServers":{}}` file in
+      a project — a workaround, not a feature. The right primitive would be
+      something like `"mcpInherit": false`.
+      Evidence: `OB6()` in v2.1.94 binary — reverse-walks ancestor dirs with
+      no short-circuit except finding a file.
+
+- [ ] **permissions.allow arrays accumulate, cannot be revoked by child settings**
+      All settings files contribute to one merged allow list. A permission
+      granted in `~/.claude/settings.json` cannot be removed by a project's
+      `settings.local.json`. No override semantics, only accumulation.
+      Evidence: `UV9()` merge customizer — `s9([...H,..._])` union-dedup.
+
+- [ ] **settings.local.json not auto-gitignored**
+      Documentation implies it should be gitignored. The write path does not
+      add it to `.gitignore`. Credentials captured in permissions.allow
+      (including API keys) persist in a plaintext file with no warning.
+      Evidence: `X8()` write function — no `.gitignore` interaction.
+
+- [ ] **No startup token budget warning**
+      No built-in mechanism warns when context load at startup is unusually
+      large. Users discover the problem mid-session when the model degrades.
