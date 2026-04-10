@@ -24,14 +24,10 @@ Ordered by impact (highest first).
 
 ## HIGH IMPACT
 
-- [ ] **Startup token audit hook (PreToolUse or startup script)**
-      Write a hook that fires at session start, estimates the token load from
-      CLAUDE.md files and `.claude/*.md` files in the current project tree,
-      and prints a warning if it exceeds a threshold (e.g. 10k tokens from
-      controllable sources).
-      Script: `hooks/claude-startup-audit.sh`
-      Hook event: investigate whether Claude Code supports a Start/PreSession hook.
-      Fallback: a standalone script to run manually before starting a session.
+- [x] **Startup token audit hook (SessionStart)**
+      Script: `hooks/claude-startup-audit.py` — walks CLAUDE.md chain, counts
+      tokens, lists MCP servers, warns on inherited .mcp.json and high context load.
+      Installed via `install.sh`, wired in `~/.claude/settings.json`.
 
 - [ ] **Scope MCP servers per-project, not globally**
       Currently 5 servers in `~/.mcp.json` load for every project:
@@ -155,7 +151,7 @@ potential Anthropic feedback. We have source code evidence for each.
 
 ## PORTABILITY — Multi-machine deployment
 
-- [ ] **Make this project portable across all Macs (iCloud sync)**
+- [x] **Make this project portable across all Macs (iCloud sync)**
       Currently installed manually on one machine. Need a strategy to deploy
       hooks and settings to all machines sharing this iCloud space (under 6 machines).
 
@@ -208,11 +204,9 @@ potential Anthropic feedback. We have source code evidence for each.
       the detection logic. The PR moves it upstream into the write path.
       Evidence: binary analysis of UV9() and X8() in v2.1.94.
 
-- [ ] **PR: SessionStart/Stop hooks for entry and exit cleanup (this project)**
-      File the hook suite as a reference implementation showing what
-      built-in behavior should look like. Entry audit + exit cleanup
-      as a pair. Let the PR make the argument that these belong in core.
-      Artifact: claude_code_management_scripts/hooks/ is already PR-ready.
+- [x] **Feature request filed: hooks.d/ extensibility design (anthropics/claude-code#46039)**
+      Design doc + reference implementation at github.com/menkhus/claude_code_management_scripts.
+      Issue filed April 2026. CLA/IPR check still required before any code PR.
 
 - [ ] **PR: MCP ancestor walk stop signal (mcpInherit: false)**
       Issue #42465 is 5 days old and unresponded. Get ahead of it with a PR.
