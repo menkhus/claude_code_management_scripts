@@ -115,7 +115,8 @@ for hook in "${HOOKS[@]}"; do
         continue
     fi
     chmod +x "$src"
-    if [[ -L "$dst" ]]; then
+    # Remove existing symlink or copied file so we can place a clean symlink
+    if [[ -e "$dst" || -L "$dst" ]]; then
         rm "$dst"
     fi
     ln -s "$src" "$dst"
