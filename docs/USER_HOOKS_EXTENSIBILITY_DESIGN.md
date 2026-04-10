@@ -1,9 +1,15 @@
 # User Hook Extensibility for Claude Code
 ## Design Guide for a Production PR
 
-*Author: Mark Menkhus*
+*Authors: Mark Menkhus and Claude (Anthropic)*
 *Filed: April 2026*
 *Scope: Code + documentation + tests PR to anthropics/claude-code*
+
+*This design was developed collaboratively: Mark Menkhus (20+ months of
+Claude Code production use across 60+ projects, prior systems programming
+experience on OSF/1 and HP-UX) and Claude Sonnet 4.6 (design synthesis,
+prior art research, document authorship). The PR will be submitted by
+Mark Menkhus (github.com/menkhus). Both authors are credited here.*
 
 ---
 
@@ -513,3 +519,8 @@ directory pattern is forty years old, proven at scale, and universally
 understood by the engineers most likely to write hooks.
 
 This PR gives those users a foundation they can rely on.
+
+---
+
+*Submitted by Mark Menkhus (github.com/menkhus) and Claude Sonnet 4.6 (Anthropic).
+Design and reference implementation developed collaboratively, April 2026.*
