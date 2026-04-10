@@ -186,6 +186,18 @@ potential Anthropic feedback. We have source code evidence for each.
 
 ## PRs TO FILE — upstream Claude Code
 
+- [ ] **BLOCKER: Verify Anthropic CLA / contribution agreement before filing any PR**
+      Anthropic almost certainly requires a Contributor License Agreement (CLA)
+      or similar IPR assignment before accepting external contributions.
+      Action before filing anything:
+      1. Check CONTRIBUTING.md in anthropics/claude-code for CLA requirements
+      2. Check if Anthropic uses CLA Assistant or a manual sign-off process
+      3. Sign/accept whatever is required under Mark Menkhus's GitHub account
+      4. Confirm attribution of AI-assisted work is acceptable under their terms
+      Do not file code or documentation PRs until this is resolved.
+      This is standard — Red Hat, Google, Apache all require it.
+      Getting it wrong poisons the PR and wastes everyone's time.
+
 - [ ] **PR: Credential sanitization in settings.local.json write path**
       Issue #5544 was closed "Not Planned" after team acknowledgment. A PR
       is harder to ignore than an issue.
